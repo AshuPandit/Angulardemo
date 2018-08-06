@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+
+    <!-- Bootstrap CSS -->
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="libs/angular.min.js"></script>
+     <script src="js/app.js"></script>
+     <title>USER MANAGEMENT SYSTEM</title>
+  </head>
+  <body ng-app="myApp" ng-controller="myController">
+    <div class="container">
+      <h1 id="usm">USER MANAGEMENT SYSTEM</h1>
+
+        <hr>
+        
+    <button type="button" class="btn btn-info btn-lg float-right" data-toggle="modal" data-target="#exampleModal" >Add New</button>
+
+    <h2>All Users</h2>
+    <span class="clearfix"></span>
+    <hr>
+
+    
+         <div class="alert alert-info" ng-if="message">
+            <a href="#" class="close" ng-click="clearMessage()">&times;</a>
+                {{message}}
+         </div>
+
+    <table class="table table-striped table-dark">
+        <thead>
+          <tr>
+            <th scope="col">User Id</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Email Id</th>
+            <th scope="col">Contact No.</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in users">
+            <th scope="row">{{$index+1001}}</th>
+            <td>{{user.UserName}}</td>
+            <td>{{user.EmailID}}</td>
+            <td>{{user.ContactNo}}</td>
+            
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditexampleModal" ng-click="selectedUser(user)">Edit</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteexampleModal" ng-click="selectedUser(user)">Delete</button>
+            </td>
+          </tr>
+          <!-- <tr>
+            <th scope="row">1002</th>
+            <td>Kunal</td>
+            <td>@kun</td>
+            <td>8888888888</td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteexampleModal">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">1003</th>
+            <td>Vinay</td>
+            <td>@vin</td>
+            <td>7777777777</td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteexampleModal">Delete</button>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+
+    </div>
+
+    <!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New User Registration Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+              <div class="form-group">
+                  <label for="emp">User Name</label>
+                  <input type="text" class="form-control" id="emp" ng-model="NewUser.UserName" >
+                </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" ng-model="NewUser.EmailID">
+            </div>
+            <div class="form-group">
+              <label for="number">Contact No.</label>
+              <input type="text" class="form-control" id="number" ng-model="NewUser.ContactNo">
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox"> Remember me</label>
+            </div>
+            <!-- <button type="submit" class="btn btn-default"  ng-click="saveuser()">Save</button> -->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveuser()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="modal fade" id="EditexampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit User Registration Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="emp">User Name</label>
+                    <input type="text" class="form-control" id="emp" ng-model="clickedUser.UserName">
+                  </div>
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" ng-model="clickedUser.EmailID">
+              </div>
+              <div class="form-group">
+                <label for="number">Contact No.</label>
+                <input type="text" class="form-control" id="number" ng-model="clickedUser.ContactNo">
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox"> Remember me</label>
+              </div>
+              <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary"  data-dismiss="modal" ng-click="updateUser()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    
+  <div class="modal fade" id="DeleteexampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you Sure?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          
+          </div>
+          <div class="modal-body">
+           <strong style="color: red;">
+                  You are going to delete......"{{clickedUser.UserName}}". All information will be deleted and can't be undone. 
+           </strong>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="deleteUser()">Yes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <!-- Optional JavaScript -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+
+   
+  </body>
+</html>
